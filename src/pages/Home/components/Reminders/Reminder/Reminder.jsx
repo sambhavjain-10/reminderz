@@ -2,7 +2,7 @@ import { Input, Select, Toggle } from "@components";
 import { Delete, TriangleArrow } from "@icons";
 import { InputThemes } from "@themes";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import InputDateTime from "react-datetime-picker";
@@ -10,11 +10,12 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import InputTime from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import styles from "./Reminder.module.scss";
+import { AlertContext } from "@contexts";
 
 const FREQUENCY_OPTIONS = {
-	mins: "Minutes",
-	hours: "Hours",
-	days: "Days",
+	mins: "Min(s)",
+	hours: "Hour(s)",
+	days: "Day(s)",
 };
 
 const ConvertFromMinutes = mins => {
@@ -33,19 +34,28 @@ const convertToMinutes = (t, d) => {
 	return t * 1440;
 };
 
-const Reminder = ({ data }) => {
+const Reminder = ({ data, refreshReminders }) => {
+	const { addConfirmMessage } = useContext(AlertContext);
 	const [collapse, setCollapse] = useState(data.isNew);
 	const [name, setName] = useState(data.name);
 	const [repitativeMode, setRepitativeMode] = useState(Boolean(data.periodInMinutes));
-	const [time, setTime] = useState(new Date(data.scheduledTime));
+	const [time, setTime] = useState(data.scheduledTime);
 	const [frequencyTime, setFrequencyTime] = useState(0);
 	const [frequencyDuration, setFrequencyDuration] = useState("mins");
 
-	const onDelete = name => chrome?.alarms.clear(name);
+	const onDelete = name => {
+		addConfirmMessage({
+			msg: `Delete reminder "${name}"?`,
+			acceptFunc: () => {
+				chrome?.alarms.clear(name);
+				refreshReminders();
+			},
+		});
+	};
 
 	const onSave = () => {
 		const periodInMinutes = parseInt(convertToMinutes(frequencyTime, frequencyDuration));
-		const when = repitativeMode ? moment(time, "HH:mm").format("x") : moment(time).format("x");
+		const when = moment(time).format("x");
 		chrome?.alarms.create(name, { when: +when, ...(repitativeMode && { periodInMinutes }) }, () => setCollapse(false));
 	};
 
@@ -54,6 +64,10 @@ const Reminder = ({ data }) => {
 		setFrequencyTime(initialTime);
 		setFrequencyDuration(initialDuration);
 	}, []);
+
+	useEffect(() => {
+		console.log(time);
+	}, [time]);
 
 	return (
 		<div className={`${styles.container} ${collapse && styles.expanded}`}>
@@ -85,17 +99,31 @@ const Reminder = ({ data }) => {
 					</div>
 					{repitativeMode ? (
 						<>
-							<InputTime value={time} onChange={val => setTime(val)} />
-							<br />
-							<br />
+							<InputTime
+								value={moment(time).format("HH:mm")}
+								onChange={val => setTime(+moment(val, "HH:mm").format("x"))}
+								clearIcon={null}
+								className={styles.timePicker}
+							/>
 							<label>Frequency:</label>
-							<br />
-							<Input value={frequencyTime} setValue={setFrequencyTime} theme={InputThemes.PRIMARY} placeholder="Type here" />
-							<br />
-							<Select value={frequencyDuration} setValue={setFrequencyDuration} options={FREQUENCY_OPTIONS} />{" "}
+							<Input
+								type="number"
+								value={frequencyTime}
+								setValue={setFrequencyTime}
+								theme={InputThemes.PRIMARY}
+								placeholder="00"
+								min={1}
+							/>
+							<Select value={frequencyDuration} setValue={setFrequencyDuration} options={FREQUENCY_OPTIONS} />
 						</>
 					) : (
-						<InputDateTime value={time} onChange={val => setTime(val)} />
+						<InputDateTime
+							value={new Date(time)}
+							onChange={val => setTime(+moment(val).format("x"))}
+							minDate={new Date()}
+							clearIcon={null}
+							className={styles.timePicker}
+						/>
 					)}
 					<div className={styles.buttons}>
 						<button className={styles.deleteBtn} onClick={() => onDelete(data.name)}>

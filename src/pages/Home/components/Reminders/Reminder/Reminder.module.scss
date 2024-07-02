@@ -46,15 +46,26 @@
 	.body {
 		margin-top: 20px;
 		transition: all 0.3s ease-in-out;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 		.toggle {
 			display: flex;
 			align-items: center;
 			gap: 10px;
 			margin-bottom: 15px;
 		}
+		.timePicker {
+			width: 100%;
+			& > div {
+				border: 1px solid $grey;
+				border-radius: 15px;
+				padding: 5px 10px;
+			}
+		}
 	}
 	.buttons {
-		margin-top: 30px;
+		margin-top: 15px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

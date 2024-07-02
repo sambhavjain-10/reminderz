@@ -17,17 +17,18 @@ const Home = () => {
 		setReminders(prev => [defaultReminder(), ...prev]);
 	};
 
+	const refreshReminders = () => {
+		chrome?.alarms?.getAll(alarms => setReminders(alarms));
+	};
+
 	useEffect(() => {
-		chrome?.alarms?.getAll(alarms => {
-			console.log(alarms);
-			setReminders(alarms);
-		});
+		chrome?.alarms?.getAll(alarms => setReminders(alarms));
 	}, []);
 
 	return (
 		<>
 			<Title />
-			<Reminders reminders={reminders} />
+			<Reminders reminders={reminders} refreshReminders={refreshReminders} />
 			<button onClick={onAddReminder} className={styles.addBtn}>
 				<Plus />
 			</button>

@@ -61,9 +61,8 @@ const AlertProvider = ({ children }) => {
 		setWarningsArray(prev => prev.filter(error => error.id !== id));
 	};
 
-	const addConfirmMessage = obj => {
-		setConfirmMessage(obj);
-	};
+	const addConfirmMessage = obj => setConfirmMessage(obj);
+
 	const removeConfirmMessage = type => {
 		setConfirmMessage(null);
 	};
