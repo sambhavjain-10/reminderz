@@ -1,0 +1,81 @@
+@import "src/colors";
+
+.errorBox {
+	position: relative;
+	width: 100%;
+	min-height: 50px;
+	max-height: 80px;
+	background: $blue;
+	padding: 0px 15px;
+	color: white;
+	border-radius: 15px;
+	display: flex;
+	gap: 20px;
+	align-items: flex-start;
+	justify-content: space-between;
+
+	@keyframes animateAlertIn {
+		0% {
+			transform: translateY(100px);
+		}
+
+		100% {
+			transform: translateY(0px);
+		}
+	}
+
+	&.isActive {
+		animation: animateAlertIn 0.25s ease-in;
+	}
+
+	.closeIcon {
+		position: absolute;
+		top: 13px;
+		right: 8px;
+		cursor: pointer;
+	}
+	.errorText {
+		font-size: 0.85rem;
+		font-weight: 600;
+		display: flex;
+		padding: 12px 0 12px 0;
+		align-items: center;
+		justify-content: center;
+		align-self: center;
+		svg {
+			margin-right: 10px;
+			min-width: 20px;
+			min-height: 20px;
+		}
+	}
+	.buttons {
+		display: flex;
+		justify-content: center;
+		align-self: center;
+		gap: 15px;
+		margin-right: 10px;
+		.yes {
+			padding: 5px;
+			display: flex;
+			align-self: center;
+			justify-content: center;
+			background-color: white;
+			font-weight: 600;
+			font-size: 1rem;
+			color: black;
+			line-height: 19px;
+			box-shadow: 5px 10px 50px rgba(41, 43, 88, 0.2);
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		.no {
+			display: flex;
+			align-self: center;
+			justify-content: center;
+			font-weight: 700;
+			font-size: 1rem;
+			cursor: pointer;
+			text-transform: capitalize;
+		}
+	}
+}

@@ -1,0 +1,84 @@
+@import "src/colors";
+
+.settings {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	height: 100%;
+	.header {
+		display: flex;
+		justify-content: space-between;
+		.closeBtn {
+			border: none;
+			background: none;
+		}
+	}
+	.options {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		flex: 1;
+		& > div {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			& > span {
+				font-weight: 500;
+			}
+		}
+		.themes {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			& > div {
+				cursor: pointer;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				border: 1px solid #cfcfcf;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				&.t_0 {
+					background: white;
+					svg {
+						color: black;
+					}
+				}
+				&.t_1 {
+					background: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+					svg {
+						color: white;
+					}
+				}
+				&.t_2 {
+					background: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+					svg {
+						color: white;
+					}
+				}
+				// &.t_3 {
+				// 	background: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+				// }
+				// &.t_4 {
+				// 	background: linear-gradient(180deg, #a9c9ff 0%, #ffbbec 100%);
+				// }
+				// &.t_5 {
+				// 	background: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+				// }
+				// &.t_6 {
+				// 	background: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
+				// }
+			}
+		}
+	}
+	.saveBtn {
+		width: 100%;
+		border: none;
+		background: $blue;
+		color: white;
+		font-weight: 500;
+		height: 36px;
+		border-radius: 10px;
+	}
+}

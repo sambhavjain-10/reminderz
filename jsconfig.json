@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@constants": ["src/constants/index.js"],
+			"@atoms": ["src/atoms/index.js"],
+			"@themes": ["src/themes/index.js"],
+			"@components": ["src/components/index.js"],
+			"@utils": ["src/utils/index.js"],
+			"@icons": ["src/icons/index.js"],
+			"@contexts": ["src/contexts/index.js"]
+		}
+	}
+}

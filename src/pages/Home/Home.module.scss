@@ -1,0 +1,30 @@
+@import "src/colors";
+
+.input {
+	position: relative;
+	input {
+		padding-right: 40px !important;
+	}
+}
+.addBtn {
+	position: absolute;
+	left: 50%;
+	bottom: 15px;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	border: none;
+	box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.1);
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	transition: 0.5s;
+	background: $blue;
+	color: white;
+	opacity: 0.7;
+	&:hover {
+		opacity: 1;
+	}
+}

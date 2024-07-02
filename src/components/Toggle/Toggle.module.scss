@@ -1,0 +1,42 @@
+@import "src/colors.scss";
+
+.toggle {
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+	width: 40px;
+	height: 20px;
+	.checkmark {
+		background-color: $grey;
+		position: absolute;
+		left: 0;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		transition: 0.3s;
+		&:after {
+			content: "";
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			width: 14px;
+			height: 14px;
+			background: $white;
+			border-radius: 50%;
+			transition: 0.3s;
+		}
+	}
+	input {
+		display: none;
+		&:checked ~ .checkmark {
+			background: $blue;
+		}
+		&:disabled ~ .checkmark {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+		&:checked ~ .checkmark:after {
+			left: 23px;
+		}
+	}
+}

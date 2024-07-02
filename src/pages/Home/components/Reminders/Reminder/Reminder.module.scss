@@ -1,0 +1,79 @@
+@import "src/colors";
+
+.container {
+	width: 100%;
+	background: $white;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	margin: 10px 0;
+	padding: 10px;
+	cursor: pointer;
+	height: auto;
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+	&.expanded {
+		overflow: visible;
+	}
+
+	.header {
+		position: relative;
+		height: 20px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		cursor: pointer;
+		.right {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 10px;
+			span {
+				font-size: 0.85rem;
+			}
+		}
+		.arrow {
+			background: none;
+			border: none;
+			color: $black;
+			transition: 0.2s ease;
+			&.arrowDown {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	.body {
+		margin-top: 20px;
+		transition: all 0.3s ease-in-out;
+		.toggle {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 15px;
+		}
+	}
+	.buttons {
+		margin-top: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		& > button {
+			background: none;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			&:hover {
+				opacity: 0.5;
+			}
+		}
+		.deleteBtn {
+			color: red;
+		}
+		.saveBtn {
+			color: $blue;
+		}
+	}
+}
