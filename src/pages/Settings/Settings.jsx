@@ -3,8 +3,10 @@ import { PAGES } from "@constants";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import styles from "./Settings.module.scss";
 import { SketchPicker } from "react-color";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Close, Tick } from "@icons";
+
+const NOTIF_SOUNDS = ["notif_1.wav", "notif_2.wav", "notif_3.mp3", "notif_4.mp3"];
 
 const THEMES = [
 	{
@@ -27,6 +29,7 @@ const THEMES = [
 const Settings = () => {
 	const setActive = useSetRecoilState(activeAtom);
 	const [savedSettings, setSavedSettings] = useRecoilState(settingsAtom);
+	const audioRef = useRef(null);
 
 	//settings
 	const [settings, setSettings] = useState(savedSettings);
@@ -48,6 +51,17 @@ const Settings = () => {
 				...theme,
 			},
 		}));
+	};
+
+	const handleNotifChange = sound => {
+		audioRef.current.src = sound;
+		audioRef.current.play();
+		chrome.storage.local.set({ notif_source: sound, notif_volume: 1 }).then(() => {
+			setSettings(prev => ({
+				...prev,
+				notif: sound,
+			}));
+		});
 	};
 
 	//saved settings
@@ -88,6 +102,17 @@ const Settings = () => {
 						min={0}
 						onChange={e => handleSizeChange(e, "width")}
 					/>
+				</div>
+				<div>
+					<span>Notification Sound:</span>
+					<div className={styles.sounds}>
+						<audio ref={audioRef} hidden />
+						{NOTIF_SOUNDS.map(sound => (
+							<div key={sound} className={styles.sound} onClick={() => handleNotifChange(sound)}>
+								{sound === settings.notif && <Tick />}
+							</div>
+						))}
+					</div>
 				</div>
 				<div>
 					<span>Theme:</span>

@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 
-async function playNotif(source = "notif.wav", volume = 1) {
+async function playNotif(source = "notif_1.wav", volume = 1) {
+	console.log("func", source, volume);
 	await createOffscreen();
 	await chrome.runtime.sendMessage({ play: { source, volume } });
 }
@@ -16,16 +17,18 @@ async function createOffscreen() {
 }
 
 chrome.alarms.onAlarm.addListener(alarm => {
-	chrome.notifications.create({
-		type: "basic",
-		iconUrl: "logo.png",
-		title: alarm.name,
-		message: "Time to check your reminders!",
-		priority: 2,
-		requireInteraction: true,
-		silent: false,
+	chrome.storage.local.get(["notif_source", "notif_volume"]).then(result => {
+		console.log("result", result);
+		chrome.notifications.create({
+			type: "basic",
+			iconUrl: "logo.png",
+			title: alarm.name,
+			message: "Time to check your reminders!",
+			priority: 2,
+			requireInteraction: true,
+		});
+		playNotif(result.notif_source, result.notif_volume);
 	});
-	playNotif();
 });
 
 // const STORAGE_KEY = "user-preference-alarm-enabled";

@@ -26,6 +26,21 @@
 				font-weight: 500;
 			}
 		}
+		.sounds {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			& > div {
+				cursor: pointer;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				border: 1px solid #cfcfcf;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
 		.themes {
 			display: flex;
 			align-items: center;

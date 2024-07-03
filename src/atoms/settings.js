@@ -15,6 +15,7 @@ const settings = atom({
 			titleColor: "#000",
 			todoColor: "#000",
 		},
+		notif: "notif_1.wav",
 		width: "410px",
 		height: "600px",
 	},

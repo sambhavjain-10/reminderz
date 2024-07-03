@@ -7,7 +7,7 @@
 		"default_popup": "index.html",
 		"default_title": "Reminderz"
 	},
-	"permissions": ["alarms", "notifications", "offscreen"],
+	"permissions": ["alarms", "notifications", "offscreen", "storage"],
 	"background": {
 		"service_worker": "background.js"
 	},
